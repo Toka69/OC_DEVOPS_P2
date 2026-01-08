@@ -5,7 +5,7 @@ Backend qui gère les APIs des utilisateurs de la bibliothèque et les CRUD des 
 ## Configuration du backend
 
     - name: etudiant-backend
-    - port: 8080
+    - port: 8181
 
 ## Pré-requis pour le bon fonctionnement du service :
 

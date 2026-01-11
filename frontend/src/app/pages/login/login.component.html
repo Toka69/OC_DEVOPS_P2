@@ -1,0 +1,55 @@
+<div class="card m-3">
+  <h5 class="card-header">Login Form</h5>
+  <div class="card-body">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Login</label>
+        <input
+          type="text"
+          formControlName="login"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && form['login'].errors }"
+        />
+        @if (submitted && form['login'].errors) {
+          <div class="invalid-feedback">
+            @if (form['login'].errors?.['required']) {
+              <div>Login is required</div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && form['password'].errors }"
+        />
+        @if (submitted && form['password'].errors) {
+          <div class="invalid-feedback">
+            @if (form['password'].errors?.['required']) {
+              <div>password is required</div>
+            }
+          </div>
+        }
+      </div>
+      <div style="display: flex; justify-content: center">
+        <button class="btn btn-primary mr-1" type="submit" [disabled]="isLoading || loginForm.invalid">
+          <span *ngIf="!isLoading">Login</span>
+          <span *ngIf="isLoading" >
+            <mat-spinner diameter="25" class="spinner-white"></mat-spinner>
+          </span>
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+    </form>
+  </div>
+</div>

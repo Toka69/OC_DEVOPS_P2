@@ -6,9 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,19 +30,19 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
+    @NotNull
     @Column(name = "firstName", nullable = false)
     private String firstName;
 
-    @NotBlank
+    @NotNull
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @NotBlank
+    @NotNull
     @Column(name = "login", unique = true, nullable = false)
     private String login;
 
-    @NotBlank
+    @NotNull
     @Column(name = "password", nullable = false)
     private String password;
 

@@ -2,9 +2,12 @@ package com.openclassrooms.etudiant.mapper;
 
 import com.openclassrooms.etudiant.dto.StudentCreateDTO;
 import com.openclassrooms.etudiant.dto.StudentDTO;
+import com.openclassrooms.etudiant.dto.StudentPartialUpdateDTO;
+import com.openclassrooms.etudiant.dto.StudentUpdateDTO;
 import com.openclassrooms.etudiant.entities.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
@@ -16,4 +19,18 @@ public interface StudentDtoMapper {
     @Mapping(target = "authorities", ignore = true)
     Student toEntity(StudentCreateDTO studentCreateDTO);
     StudentDTO toDTO(Student student);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "created_at", ignore = true)
+    @Mapping(target = "updated_at", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
+    void updateStudentFromDTO(StudentUpdateDTO dto, @MappingTarget Student student);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "created_at", ignore = true)
+    @Mapping(target = "updated_at", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
+    void updateStudentFromPartialDTO(StudentPartialUpdateDTO dto, @MappingTarget Student student);
 }

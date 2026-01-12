@@ -1,5 +1,7 @@
 package com.openclassrooms.etudiant.handler;
 
+import com.openclassrooms.etudiant.exception.StudentLoginAlreadyExistsException;
+import com.openclassrooms.etudiant.exception.StudentNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +45,28 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = {Exception.class})
     protected ResponseEntity<Object> handleException(RuntimeException runtimeException, WebRequest request) {
         logError(runtimeException);
-        return handleExceptionInternal(runtimeException, "Internal Server error", new HttpHeaders(),
+        return handleExceptionInternal(runtimeException, getErrorDetails(runtimeException, request), new HttpHeaders(),
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(StudentLoginAlreadyExistsException.class)
+    protected ResponseEntity<Object> handleLoginConflict(StudentLoginAlreadyExistsException ex, WebRequest request) {
+        logError(ex);
+        return handleExceptionInternal(ex, getErrorDetails(ex, request),
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(StudentNotFoundException.class)
+    protected ResponseEntity<Object> handleStudentNotFound(StudentNotFoundException ex, WebRequest request) {
+        logError(ex);
+        return handleExceptionInternal(ex, getErrorDetails(ex, request),
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     private void logError(Exception exception) {

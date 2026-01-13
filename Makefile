@@ -1,4 +1,4 @@
-.PHONY: start stop backend-logs frontend-logs logs links
+.PHONY: start stop backend-logs frontend-logs logs links restart restart-logs
 
 # ANSI color
 GREEN = \033[32m
@@ -18,6 +18,15 @@ stop:
 	- pkill -f "spring-boot:run" || true
 	- pkill -f "ng serve" || true
 	@echo "✅ Backend and frontend stopped."
+
+restart:
+	@$(MAKE) stop --no-print-directory
+	@sleep 2
+	@$(MAKE) start --no-print-directory
+
+restart-logs:
+	@$(MAKE) restart --no-print-directory
+	@$(MAKE) logs --no-print-directory
 
 links:
 	@echo "$(GREEN)Frontend app accessible at http://localhost:4200"

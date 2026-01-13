@@ -27,4 +27,17 @@ public class JwtService {
                 .signWith(secretKey)
                 .compact();
     }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getUsernameFromToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+    }
 }

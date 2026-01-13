@@ -22,13 +22,13 @@ public class UserController {
     private final UserService userService;
     private final UserDtoMapper userDtoMapper;
 
-    @PostMapping("/api/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterDTO registerDTO) {
         userService.register(userDtoMapper.toEntity(registerDTO));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
         String jwtToken = userService.login(loginRequestDTO.getLogin(), loginRequestDTO.getPassword());
         return ResponseEntity.ok(Map.of("token", jwtToken));

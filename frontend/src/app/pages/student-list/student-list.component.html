@@ -1,0 +1,56 @@
+<div class="container">
+  <span>
+    <h2>Liste des étudiants</h2>
+  </span>
+
+  <div style="text-align: center">
+    <button (click)=goToAdd() class="btn btn-primary">Ajouter un étudiant</button>
+  </div>
+
+  <!-- Message de chargement -->
+  <div *ngIf="isLoading" class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Chargement en cours...</p>
+  </div>
+
+  <!-- Message d'erreur -->
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Tableau des étudiants -->
+  <table *ngIf="!isLoading && !errorMessage" mat-table [dataSource]="students" class="mat-elevation-z8">
+    <!-- Colonnes existantes -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let student">{{ student.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let student">{{ student.lastName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef>Prénom</th>
+      <td mat-cell *matCellDef="let student">{{ student.firstName }}</td>
+    </ng-container>
+
+    <!-- Nouvelle colonne pour les actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let student" class="actions-cell">
+        <button mat-icon-button color="primary" (click)="goToEdit(student.id)" aria-label="Éditer">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteStudent(student.id)" aria-label="Supprimer">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr (click)="goToDetail(student.id)" mat-row *matRowDef="let student; columns: displayedColumns;" class="clickable-row"></tr>
+  </table>
+
+</div>

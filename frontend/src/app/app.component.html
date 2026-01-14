@@ -1,1 +1,5 @@
+<div *ngIf="isLoggedIn()" style="padding: 10px; border-bottom: 1px solid; text-align: end">
+  <button (click)="logOut()" class="btn btn-warning">Log out</button>
+</div>
 <router-outlet/>
+

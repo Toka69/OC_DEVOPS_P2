@@ -5,6 +5,7 @@ import {UserService} from '../../core/service/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Login} from '../../core/models/Login';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private destroyRef: DestroyRef,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,9 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', response.token);
           this.successMessage = 'Connection successful! Redirecting...';
           this.isLoading = false;
-          // TODO: Redirect to a protected page
+          setTimeout(() => {
+            this.router.navigate(['/students/list']);
+          }, 1000);
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Incorrect login or password';

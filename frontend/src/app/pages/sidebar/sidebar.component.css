@@ -1,0 +1,22 @@
+nav {
+  width: 200px;
+  background: #f0f0f0;
+  padding: 1rem;
+  position: fixed;
+  height: 100vh;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  margin: 1rem 0;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+a.active {
+  font-weight: bold;
+  color: #007bff;
+}

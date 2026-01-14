@@ -1,0 +1,27 @@
+.container {
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.loading, .error {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: red;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+

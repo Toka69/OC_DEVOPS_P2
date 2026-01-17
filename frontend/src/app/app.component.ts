@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import {SidebarComponent} from './pages/sidebar/sidebar.component';
 import {NgIf} from '@angular/common';
 import { Router } from '@angular/router';
+import {AuthService} from './core/service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -15,25 +16,20 @@ import { Router } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  isLoggedIn: boolean = false;
+
+  constructor(private router: Router, private authService: AuthService) {}
 
   title = 'etudiant-frontend';
 
-  isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const exp = payload.exp * 1000;
-      return Date.now() < exp;
-    } catch (e) {
-      return false;
-    }
+  ngOnInit(): void {
+    this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
+      this.isLoggedIn = isLoggedIn;
+    });
   }
 
   logOut(): void {
-    localStorage.removeItem('token');
+    this.authService.clearToken();
     this.router.navigate(['/login']);
   }
 }

@@ -3,7 +3,7 @@
   <div class="card-body">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
-        <div class="form-group col-5">
+        <div class="form-group col-6">
           <label>First Name</label>
           <input
             type="text"
@@ -19,7 +19,7 @@
             </div>
           }
         </div>
-        <div class="form-group col-5">
+        <div class="form-group col-6">
           <label>Last Name</label>
           <input
             type="text"
@@ -70,11 +70,26 @@
         }
       </div>
       <div class="text-center">
-        <button class="btn btn-primary mr-1">Register</button>
+        <button class="btn btn-primary mr-1" type="submit" [disabled]="isLoading || registerForm.invalid">
+          <span *ngIf="!isLoading">Register</span>
+          <span *ngIf="isLoading" >
+            <mat-spinner diameter="25" class="spinner-white"></mat-spinner>
+          </span>
+        </button>
         <button class="btn btn-secondary" type="reset" (click)="onReset()">
           Cancel
         </button>
       </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
     </form>
+    <div style="margin-top: 20px;">
+      <button class="btn btn-warning" (click)="goHome()">Go Home</button>
+    </div>
   </div>
 </div>

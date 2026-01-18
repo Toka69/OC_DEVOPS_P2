@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../../shared/material.module';
 import {UserService} from '../../core/service/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Login} from '../../core/models/Login';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Router} from '@angular/router';
+import {AuthService} from '../../core/service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,15 +20,26 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  isLoggedIn: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private destroyRef: DestroyRef,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
+      this.isLoggedIn = isLoggedIn;
+
+      if (this.isLoggedIn) {
+        this.router.navigate(['/students/list']);
+      }
+    });
+
     this.loginForm = this.formBuilder.group(
       {
         login: ['', Validators.required],
@@ -56,12 +67,9 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
-          localStorage.setItem('token', response.token);
-          this.successMessage = 'Connection successful! Redirecting...';
+          this.authService.login(response.token)
           this.isLoading = false;
-          setTimeout(() => {
-            this.router.navigate(['/students/list']);
-          }, 1000);
+          this.router.navigate(['/students/list']);
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Incorrect login or password';
@@ -73,5 +81,10 @@ export class LoginComponent implements OnInit {
   onReset(): void {
     this.submitted = false;
     this.loginForm.reset();
+    this.router.navigate(['/']);
+  }
+
+  goHome(): void {
+    this.router.navigate(['/']);
   }
 }

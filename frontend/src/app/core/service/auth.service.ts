@@ -10,7 +10,7 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = '/auth';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.isLoggedInSubject.asObservable(); // Observable pour s'abonner à l'état de connexion
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.checkInitialLoginState();
@@ -25,7 +25,7 @@ export class AuthService {
     this.isLoggedInSubject.next(isLoggedIn);
   }
 
-  validateToken(token: string): Observable<{ valid: boolean }> {
+  public validateToken(token: string): Observable<{ valid: boolean }> {
     return this.http.post<{ valid: boolean }>(`${this.apiUrl}/validate-token`, { token }).pipe(
       tap((response) => {
         this.updateLoginState(response.valid);
@@ -33,12 +33,12 @@ export class AuthService {
     );
   }
 
-  login(token: string): void {
+  public login(token: string): void {
     localStorage.setItem('token', token);
     this.updateLoginState(true);
   }
 
-  clearToken(): void {
+  public clearToken(): void {
     localStorage.removeItem('token');
     this.updateLoginState(false);
   }

@@ -10,7 +10,6 @@ import {AuthService} from './core/service/auth.service';
   templateUrl: './app.component.html',
   imports: [
     RouterOutlet,
-    SidebarComponent,
     NgIf
   ],
   styleUrl: './app.component.css'
@@ -30,6 +29,6 @@ export class AppComponent {
 
   logOut(): void {
     this.authService.clearToken();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }

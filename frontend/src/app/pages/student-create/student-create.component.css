@@ -1,0 +1,21 @@
+.spinner-white {
+  ::ng-deep circle {
+    stroke: white;
+  }
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 16px;
+  padding: 10px;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: #4caf50;
+  margin-top: 16px;
+  padding: 10px;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+}

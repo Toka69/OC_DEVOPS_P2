@@ -14,13 +14,18 @@ import {AuthService} from '../../core/service/auth.service';
 export class HomeComponent {
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
+
+      if (this.isLoggedIn) {
+        this.router.navigate(['/students/list']);
+      }
     });
   }
-
-
 }

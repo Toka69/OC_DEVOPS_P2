@@ -1,8 +1,6 @@
-// src/app/guards/auth.guard.ts
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
 import {AuthService} from '../service/auth.service';
 
 @Injectable({

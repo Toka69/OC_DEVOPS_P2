@@ -1,2 +1,33 @@
 <app-sidebar></app-sidebar>
-<p>student-detail works!</p>
+<div style="margin-left: 200px">
+  <div class="card-body">
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden"></span>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <div *ngIf="student && !loading && !error">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h5 class="card-title">Personal information</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Firs Name :</strong> {{ student.firstName }}
+            </li>
+            <li class="list-group-item">
+              <strong>Last Name :</strong> {{ student.lastName }}
+            </li>
+            <li class="list-group-item">
+              <strong>Login :</strong> {{ student.login }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

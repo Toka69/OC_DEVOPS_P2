@@ -20,14 +20,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final StudentService studentService;
 
     public void register(User user) {
         Assert.notNull(user, "User must not be null");
         log.info("Registering new user");
 
         Optional<User> optionalUser = userRepository.findByLogin(user.getLogin());
-        if (optionalUser.isPresent()) {
-            throw new IllegalArgumentException("User with login " + user.getLogin() + " already exists");
+        if (optionalUser.isPresent() || studentService.existsByLogin(user.getLogin())) {
+            throw new IllegalArgumentException(String.format("Login %s already exists", user.getLogin()));
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);

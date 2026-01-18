@@ -5,7 +5,9 @@ import com.openclassrooms.etudiant.entities.Student;
 import com.openclassrooms.etudiant.exception.StudentLoginAlreadyExistsException;
 import com.openclassrooms.etudiant.exception.StudentNotFoundException;
 import com.openclassrooms.etudiant.mapper.StudentDtoMapper;
+import com.openclassrooms.etudiant.repository.UserRepository;
 import com.openclassrooms.etudiant.service.StudentService;
+import com.openclassrooms.etudiant.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +24,16 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-
     @Autowired
     private StudentDtoMapper studentMapper;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@RequestBody @Valid StudentCreateDTO studentCreateDTO) {
-        if (studentService.existsByLogin(studentCreateDTO.getLogin())) {
+        if (studentService.existsByLogin(studentCreateDTO.getLogin())
+            || userRepository.findByLogin(studentCreateDTO.getLogin()).isPresent()
+        ) {
             throw new StudentLoginAlreadyExistsException(studentCreateDTO.getLogin());
         }
 

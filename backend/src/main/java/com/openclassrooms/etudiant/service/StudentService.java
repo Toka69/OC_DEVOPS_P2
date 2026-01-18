@@ -34,6 +34,8 @@ public class StudentService {
     }
 
     public boolean existsByLogin(String login) {
-        return studentRepository.existsByLogin(login);
+        Optional<Student> OptionalStudent = studentRepository.findByLogin(login);
+
+        return  OptionalStudent.isPresent();
     }
 }

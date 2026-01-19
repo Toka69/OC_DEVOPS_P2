@@ -61,19 +61,19 @@ public class StudentController {
         return ResponseEntity.ok(studentMapper.toDTO(student));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentUpdateDTO studentUpdateDTO) {
-        if (studentService.existsByLogin(studentUpdateDTO.getLogin()))
-            throw new StudentLoginAlreadyExistsException(studentUpdateDTO.getLogin());
-
-        Student student = studentService.getStudentById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
-
-        studentMapper.updateStudentFromDTO(studentUpdateDTO, student);
-        Student updated = studentService.saveStudent(student);
-
-        return ResponseEntity.ok(studentMapper.toDTO(updated));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentUpdateDTO studentUpdateDTO) {
+//        if (studentService.existsByLogin(studentUpdateDTO.getLogin()))
+//            throw new StudentLoginAlreadyExistsException(studentUpdateDTO.getLogin());
+//
+//        Student student = studentService.getStudentById(id)
+//                .orElseThrow(() -> new StudentNotFoundException(id));
+//
+//        studentMapper.updateStudentFromDTO(studentUpdateDTO, student);
+//        Student updated = studentService.saveStudent(student);
+//
+//        return ResponseEntity.ok(studentMapper.toDTO(updated));
+//    }
 
     @PatchMapping("/{id}")
     public ResponseEntity<StudentDTO> partialUpdateStudent(

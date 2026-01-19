@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @Testcontainers
 public class UserControllerTest {
 
-    private static final String URL = "/api/register";
+    private static final String URL = "/auth/register";
     private static final String FIRST_NAME = "John";
     private static final String LAST_NAME = "Doe";
     private static final String LOGIN = "login";
@@ -62,21 +62,22 @@ public class UserControllerTest {
 
     @Test
     public void registerUserWithoutRequiredData() throws Exception {
-        // GIVEN
+        // GIVEN: An empty RegisterDTO without required fields
         RegisterDTO registerDTO = new RegisterDTO();
 
-        // WHEN
+        // WHEN: Sending a POST request to the registration endpoint
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
                         .content(objectMapper.writeValueAsString(registerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
+                // THEN: The server should return 400 Bad Request status
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
     public void registerAlreadyExistUser() throws Exception {
-        // GIVEN
+        // GIVEN: A user is already registered in the system
         User user = new User();
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
@@ -84,36 +85,39 @@ public class UserControllerTest {
         user.setPassword(PASSWORD);
         userService.register(user);
 
+        // A registration request with the same login
         RegisterDTO registerDTO = new RegisterDTO();
         registerDTO.setFirstName(FIRST_NAME);
         registerDTO.setLastName(LAST_NAME);
         registerDTO.setLogin(LOGIN);
         registerDTO.setPassword(PASSWORD);
 
-        // WHEN
+        // WHEN: Attempting to register the user again
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
                         .content(objectMapper.writeValueAsString(registerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
+                // THEN: The server should return 400 Bad Request as the login is already taken
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
     public void registerUserSuccessful() throws Exception {
-        // GIVEN
+        // GIVEN: A valid registration DTO
         RegisterDTO registerDTO = new RegisterDTO();
         registerDTO.setFirstName(FIRST_NAME);
         registerDTO.setLastName(LAST_NAME);
         registerDTO.setLogin(LOGIN);
         registerDTO.setPassword(PASSWORD);
 
-        // WHEN
+        // WHEN: Sending a POST request with valid user data
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
                         .content(objectMapper.writeValueAsString(registerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
+                // THEN: The server should return 201 Created status
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 }

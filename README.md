@@ -1,141 +1,100 @@
-# EtuBibliothèque - Student Library Subscriber Management
+# OC DevOps Project 2: Test and Improve an Existing Application
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
-![Mockito](https://img.shields.io/badge/Mockito-4EA94B?style=for-the-badge)
-![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
-![Cypress](https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white)
-
-**Project 2 - DevOps Expert Path - OpenClassrooms**
+**EtuBibliothèque Application** – Student Library Subscription Management.
 
 ---
 
-## 📌 Project Description
-EtuBibliothèque is a full-stack (Java/Angular) application designed to manage student subscribers in a library. This project focuses on **improving the existing application** by:
-- Fixing the authentication API on the back-end.
-- Implementing the authentication interface on the front-end.
-- Adding **unit, integration, and end-to-end tests** to ensure code quality and maintainability.
+## 📋 Prerequisites
 
----
+### Back-end
+- **Java**: Version 21 or higher
+- **Maven**: Version 3.9+
+- **Docker**
 
-## 🛠 Prerequisites
-- **Back-end**:
-    - Java 21+
-    - Maven 3.9
-    - Database (e.g., MySQL, PostgreSQL)
-- **Front-end**:
-    - Node.js 22
-    - Angular 19
-- **Testing Tools**:
-    - JUnit 5, Mockito (back-end)
-    - Jest, Cypress (front-end)
+### Front-end
+- **Node.js**: Version 22 (LTS recommended)
 
 ---
 
 ## 🚀 Installation
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/etu-bibliotheque.git
-cd etu-bibliotheque
-```
-
-### 2. Set Up the Back-end
-1. Navigate to the `backend` directory:
+1. **Clone the repository**:
    ```bash
-   cd backend
-   ```
-2. Configure the database in `src/main/resources/application.properties`.
-3. Install dependencies and start the server:
-   ```bash
-   mvn clean install
-   mvn spring-boot:run
+   git clone https://github.com/Toka69/OC_DEVOPS_P2.git
+   cd OC_DEVOPS_P2
    ```
 
-### 3. Set Up the Front-end
-1. Navigate to the `frontend` directory:
+2. **Initialize dependencies**:
    ```bash
-   cd ../frontend
+   make init
    ```
-2. Install dependencies:
+   *(Installs back-end dependencies with Maven and front-end dependencies with npm.)*
+
+3. **Start the application**:
    ```bash
-   npm install
+   make start
    ```
-3. Start the Angular application:
-   ```bash
-   ng serve
-   ```
+    - Back-end runs on `http://localhost:8181`
+    - Front-end is accessible on `http://localhost:4200`
 
 ---
 
-## 🧪 Testing
+## 🛠 Makefile Commands
+
+| Command               | Description                                      |
+|-----------------------|--------------------------------------------------|
+| `make init`           | Install dependencies (back-end + front-end)      |
+| `make start`          | Start the entire application                     |
+| `make stop`           | Stop back-end and front-end services             |
+| `make restart`        | Restart the application                          |
+| `make logs`           | Display logs (back-end + front-end)              |
+| `make backend-logs`   | Display back-end logs only                      |
+| `make frontend-logs`  | Display front-end logs only                      |
+| `make restart-logs`   | Restart and display logs                         |
+
+---
+
+## 🧪 Testing and Coverage
 
 ### Back-end (Java)
-- **Unit tests**: `mvn test`
-- **Coverage reports**: `mvn jacoco:report`
-  (Minimum threshold: **80%**)
+- **Run tests**:
+  ```bash
+  cd backend
+  mvn test
+  ```
+- **Coverage report**:
+  Open `backend/target/site/jacoco/index.html` in your browser.
 
 ### Front-end (Angular)
-- **Unit tests**: `ng test`
-- **End-to-end tests (Cypress)**: `ng e2e`
-- **Coverage reports**: `ng test --code-coverage`
+- **Unit/functional tests (Jest)**:
+  ```bash
+  cd frontend
+  npm run test:coverage
+  ```
+  *(Report generated in `frontend/coverage/index.html`.)*
+
+- **E2E tests (Cypress)**:
+  ```bash
+  npm run start:coverage
+  ```
+  and inside another terminal
+  ```bash
+  npm run cyp:coverage:html
+  ```
+
+  *(Report generated in `frontend/coverage/e2e/index.html`.)*
 
 ---
 
 ## 📂 Project Structure
+
 ```
-etu-bibliotheque/
+OC_DEVOPS_P2/
 ├── backend/          # Java code (Spring Boot)
-│   ├── src/
-│   │   ├── main/      # Source code
-│   │   └── test/      # Unit and integration tests
-│   └── pom.xml        # Maven dependencies
-│
 ├── frontend/         # Angular code
-│   ├── src/
-│   │   ├── app/       # Components and services
-│   │   └── assets/    # Static resources
-│   ├── cypress/       # E2E tests
-│   └── package.json   # npm dependencies
-│
-├── documentation/    # Specifications and reports
-└── README.md          # This file
+├── Makefile          # Useful commands
+└── README.md         # This file
 ```
 
 ---
-
-## 🎯 Added Features
-- **Authentication**:
-    - Fixed `/api/auth` API (back-end).
-    - Implemented login interface (front-end).
-- **Tests**:
-    - 80%+ coverage for both back-end and front-end.
-    - E2E tests for critical user journeys.
-
----
-
-## 📊 Reports
-- [Back-end coverage report](backend/target/site/jacoco/index.html)
-- [Front-end coverage report](frontend/coverage/index.html)
-- [Cypress test report](frontend/cypress/reports/)
-
----
-
-## 🤝 Contribution
-1. Fork the project.
-2. Create a branch (`git checkout -b feature/my-feature`).
-3. Commit your changes (`git commit -m "Add my feature"`).
-4. Push the branch (`git push origin feature/my-feature`).
-5. Open a Pull Request.
-
----
-
-## 📄 License
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for more information.
-
----
-
-## 📬 Contact
-Matthias LEROUX - [contact@matthias-leroux.fr](mailto:matthias.leroux@example.com)
-Project completed as part of the **DevOps Expert Path** - OpenClassrooms.
+**Author**: Matthias LEROUX

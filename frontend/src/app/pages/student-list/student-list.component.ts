@@ -62,14 +62,14 @@ export class StudentListComponent {
   }
 
   deleteStudent(id: number) {
-    if (confirm('Voulez-vous vraiment supprimer cet étudiant ?')) {
+    if (confirm('Do you really want to delete this student?')) {
       this.isLoading = true;
       this.studentService.deleteStudent(id).subscribe({
         next: () => {
           this.loadStudents();
         },
         error: (err: any) => {
-          this.errorMessage = "Erreur lors de la suppression de l'étudiant.";
+          this.errorMessage = "Error deleting the student";
           this.isLoading = false;
         }
       });
@@ -90,7 +90,7 @@ export class StudentListComponent {
         this.isLoading = false;
       },
       error: (err: any) => {
-        this.errorMessage = 'Erreur lors de la récupération des étudiants.';
+        this.errorMessage = 'Error retrieving students';
         this.isLoading = false;
         console.error('Erreur:', err);
       }

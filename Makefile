@@ -3,6 +3,10 @@
 # ANSI color
 GREEN = \033[32m
 
+init:
+	mvn -f backend/pom.xml clean install &
+	cd frontend && npm install --legacy-peer-deps
+
 # Start backend and frontend in detached mode
 start:
 	@echo "🚀 Starting Spring Boot backend in detached mode..."

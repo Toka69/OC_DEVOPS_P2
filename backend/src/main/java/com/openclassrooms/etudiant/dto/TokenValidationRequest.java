@@ -3,7 +3,6 @@ package com.openclassrooms.etudiant.dto;
 public class TokenValidationRequest {
     private String token;
 
-    // Getters et Setters
     public String getToken() {
         return token;
     }

@@ -104,7 +104,7 @@ export class StudentEditComponent {
             this.router.navigate(['/students/list']);
           },
           error: (err: any) => {
-            console.error('Erreur lors de la mise à jour', err);
+            console.error('Update error', err);
           }
         });
     }

@@ -41,7 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!token) {
       this.router.navigate(['/login']);
 
-      return throwError('Token non trouvé');
+      return throwError('Token not found');
     }
 
     return this.authService.validateToken(token).pipe(
@@ -51,7 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
         } else {
           this.router.navigate(['/login']);
 
-          return throwError('Token invalide');
+          return throwError('Invalid token');
         }
       }),
       catchError((error) => {
